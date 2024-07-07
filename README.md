@@ -1,70 +1,84 @@
-# Getting Started with Create React App
+# NAMASTE YOUTUBE PROJECT
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### APP STRUCTURE
 
-## Available Scripts
+- Header
+- Body
+  - SideBar
+    - MenuItems
+  - MainContainer
+    - Buttons List
+    - VideoContainer
+      - VideoCard
 
-In the project directory, you can run:
+### Debouncing
 
-### `npm start`
+- Typing fast -> difference b/w 2 key strokes is less (let 30 ms)
+- Typing slow -> difference b/w 2 key strokes is more (let 200 ms)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Performance
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- iphone pro max = 14 letter \* 1000 people making API calls = 14000 API calls
+- with debouncing = 3 API calls \* 1000 = 3000 API CALLS
 
-### `npm test`
+- Debouncing is applied with 200ms
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  - if difference between 2 key strokes is < 200ms -> decline the API CALL.
 
-### `npm run build`
+- For debouncing used in Google/ youtube the time is
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  /\*
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+  -
+  - KEY - i
+  - - render the component
+  - - useEffect();
+  - - start timer => make api call after 200 ms
+  -
+  - KEY - ip
+  - - destroy the component(useEffect return method called)
+  - - re-render the component
+  - - useEffect()
+  - - start timer => make api call after 200 ms
+      \*/
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Caching
 
-### `npm run eject`
+Time complexity to search for an array = O(n)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+[i, ip, iph, ipho, iphon, iphone]
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Time complexity of search for an object/map = O(1)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+{
+i:
+ip:
+iph:
+ipho:
+iphon:
+iphone:
+}
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+new Map() -> even more optimized than searching inside Object.
+For simplicity we will use object here.
 
-## Learn More
+### Live chatting
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Live Chatting >>>>>>> Infinite scrolling >>>>>>>> Pagination
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- challenges of live chat:
+  -> Get data live -- Data Layer
+  -> Update the chat window (UI)
 
-### Code Splitting
+Update UI in an efficient way so that the page doesnot freeze even after loading the live stream data for a longer period of time.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- Two ways to handle LIVE data
+  -> Using Web Sockets - 2 way connection that creates a handshake. Once done we can send data from either side, i.e. bi-directional. No regular inerval.
 
-### Analyzing the Bundle Size
+  -> API polling - UI request the server for data and the server sends the data. Uni-directional data. In regular interval the data is polled
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
+- In an application like GMail, API polling can be used as e dont need very real time data . Its okay if the reciver gets the mail after 10 seconds. Eg: Crickbuzz - API polling happens in "25 seconds".
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- If there is application like stock market apps, Here we need very real time data. Eg: Live chat applications need real time data.
