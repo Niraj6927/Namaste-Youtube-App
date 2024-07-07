@@ -82,3 +82,7 @@ Update UI in an efficient way so that the page doesnot freeze even after loading
 - In an application like GMail, API polling can be used as e dont need very real time data . Its okay if the reciver gets the mail after 10 seconds. Eg: Crickbuzz - API polling happens in "25 seconds".
 
 - If there is application like stock market apps, Here we need very real time data. Eg: Live chat applications need real time data.
+
+
+### Deploy In Vercel
+- websites: https://namaste-youtube-app-theta.vercel.app/
